@@ -11,5 +11,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_EMAIL = new Prefix("e/");
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+    //@@author xhphoong-reused
+    //Reused from https://github.com/se-edu/addressbook-level3/compare/tutorial-add-remark
+    public static final Prefix PREFIX_REMARK = new Prefix("r/");
+    //@@author
 
 }

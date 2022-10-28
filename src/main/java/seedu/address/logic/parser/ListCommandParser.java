@@ -68,13 +68,11 @@ public class ListCommandParser implements Parser {
 
         List<Optional<Boolean>> fullyAssigned = new ArrayList<>();
         argMultimap.getValue(PREFIX_FULLY_ASSIGNED).ifPresentOrElse(
-                x -> fullyAssigned.add(Optional.of(Boolean.valueOf(x))),
-                () -> fullyAssigned.add(Optional.empty()));
+                x -> fullyAssigned.add(Optional.of(Boolean.valueOf(x))), () -> fullyAssigned.add(Optional.empty()));
 
         List <Optional<Boolean>> fullyVisited = new ArrayList<>();
         argMultimap.getValue(PREFIX_FULLY_VISITED).ifPresentOrElse(
-                x -> fullyVisited.add(Optional.of(Boolean.valueOf(x))),
-                () -> fullyVisited.add(Optional.empty()));
+                x -> fullyVisited.add(Optional.of(Boolean.valueOf(x))), () -> fullyVisited.add(Optional.empty()));
         return new ListCommand(address, category.get(0), gender.get(0), tag,
                 fullyAssigned.get(0), fullyVisited.get(0));
     }

@@ -18,7 +18,7 @@ public class ListCommandParserTest {
         Command expectedCommand = new ListCommand(Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         Command actualCommand = new ListCommandParser().parse("");
-        assert(actualCommand.equals(expectedCommand));
+        assert (actualCommand.equals(expectedCommand));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class ListCommandParserTest {
         Command expectedCommand = new ListCommand(Optional.of(new Address("Jurong")), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         Command actualCommand = new ListCommandParser().parse("list a/ Jurong");
-        assert(actualCommand.equals(expectedCommand));
+        assert (actualCommand.equals(expectedCommand));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class ListCommandParserTest {
                 Optional.of(new Category(Category.PATIENT_SYMBOL)),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         Command actualCommand = new ListCommandParser().parse("list c/ P");
-        assert(actualCommand.equals(expectedCommand));
+        assert (actualCommand.equals(expectedCommand));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class ListCommandParserTest {
                 Optional.of(new Gender(Gender.FEMALE_SYMBOL)), Optional.empty(),
                 Optional.empty(), Optional.empty());
         Command actualCommand = new ListCommandParser().parse("list g/ F");
-        assert(actualCommand.equals(expectedCommand));
+        assert (actualCommand.equals(expectedCommand));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ListCommandParserTest {
         Command expectedCommand = new ListCommand(Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.of(new Tag("friends")), Optional.empty(), Optional.empty());
         Command actualCommand = new ListCommandParser().parse("list t/ friends");
-        assert(actualCommand.equals(expectedCommand));
+        assert (actualCommand.equals(expectedCommand));
     }
 
     @Test
@@ -81,6 +81,6 @@ public class ListCommandParserTest {
                 Optional.empty());
         Command actualCommand = new ListCommandParser().parse("list a/Jurong c/ P g/ F t/ friends");
 
-        assert(actualCommand.equals(expectedCommand));
+        assert (actualCommand.equals(expectedCommand));
     }
 }

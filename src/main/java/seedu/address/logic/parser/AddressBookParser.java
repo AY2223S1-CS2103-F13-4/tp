@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AssignCommand;
+import seedu.address.logic.commands.CheckSimilarCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeassignCommand;
@@ -17,6 +18,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.UndoUnmarkCommand;
 import seedu.address.logic.commands.UnmarkCommand;
 import seedu.address.logic.commands.UpdateContactCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -71,6 +73,9 @@ public class AddressBookParser {
         case UnmarkCommand.COMMAND_WORD:
             return new UnmarkCommandParser().parse(arguments);
 
+        case UndoUnmarkCommand.COMMAND_WORD:
+            return new UndoUnmarkCommandParser().parse(arguments);
+
         case AssignCommand.COMMAND_WORD:
             return new AssignCommandParser().parse(arguments);
 
@@ -85,6 +90,9 @@ public class AddressBookParser {
 
         case UpdateContactCommand.COMMAND_WORD:
             return new UpdateContactCommandParser().parse(arguments);
+
+        case CheckSimilarCommand.COMMAND_WORD:
+            return new CheckSimilarCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

@@ -15,6 +15,8 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Gender;
+import seedu.address.model.person.Nurse;
+import seedu.address.model.person.Patient;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -35,9 +37,10 @@ public class ListCommandTest {
     @Test
     public void execute_noFiltersApplied_showsEverything() {
         Command listCommand = new ListCommand(Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         assertCommandSuccess(listCommand,
-                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "NIL", "NIL"), expectedModel);
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "NIL", "NIL", "NIL", "NIL"),
+                expectedModel);
     }
 
     @Test
@@ -46,9 +49,10 @@ public class ListCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
 
         Command listCommand = new ListCommand(Optional.of(new Address("Jurong")), Optional.empty(),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         assertCommandSuccess(listCommand,
-                model, String.format(ListCommand.MESSAGE_SUCCESS, "Jurong", "NIL", "NIL", "NIL"), expectedModel);
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "Jurong", "NIL", "NIL", "NIL", "NIL", "NIL"),
+                expectedModel);
     }
 
     @Test
@@ -57,9 +61,10 @@ public class ListCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
 
         Command listCommand = new ListCommand(Optional.empty(), Optional.of(new Category(Category.PATIENT_SYMBOL)),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         assertCommandSuccess(listCommand,
-                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "P", "NIL", "NIL"), expectedModel);
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "P", "NIL", "NIL", "NIL", "NIL"),
+                expectedModel);
     }
 
     @Test
@@ -68,9 +73,11 @@ public class ListCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
 
         Command listCommand = new ListCommand(Optional.empty(), Optional.empty(),
-                Optional.of(new Gender(Gender.MALE_SYMBOL)), Optional.empty());
+                Optional.of(new Gender(Gender.MALE_SYMBOL)), Optional.empty(), Optional.empty(),
+                Optional.empty());
         assertCommandSuccess(listCommand,
-                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "M", "NIL"), expectedModel);
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "M", "NIL", "NIL", "NIL"),
+                expectedModel);
     }
 
     @Test
@@ -79,9 +86,56 @@ public class ListCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
 
         Command listCommand = new ListCommand(Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.of(new Tag("friends")));
+                Optional.empty(), Optional.of(new Tag("friends")), Optional.empty(), Optional.empty());
         assertCommandSuccess(listCommand,
-                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "NIL", "friends"), expectedModel);
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "NIL", "friends", "NIL", "NIL"),
+                expectedModel);
+    }
+
+    @Test
+    public void execute_fullyAssignedFilterApplied_showsTrueTag() {
+        Predicate<Person> predicate = x -> {
+            boolean dateSlotMatch;
+            if (x.getCategory().toString().equals("P")) {
+                Patient p = ((Patient) x);
+                dateSlotMatch = p.hasBeenFullyAssigned();
+            } else {
+                Nurse n = ((Nurse) x);
+                dateSlotMatch = n.getUnavailableDates().size()
+                        + n.getFullyScheduledDates().size()
+                        >= 7;
+            }
+            return dateSlotMatch;
+        };
+        expectedModel.updateFilteredPersonList(predicate);
+
+        Command listCommand = new ListCommand(Optional.empty(), Optional.empty(),
+                Optional.empty(), Optional.empty(), Optional.of(Boolean.TRUE), Optional.empty());
+        assertCommandSuccess(listCommand,
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "NIL", "NIL", "true", "NIL"),
+                expectedModel);
+    }
+
+    @Test
+    public void execute_notFullyVisitedFilterApplied_showsFalseTag() {
+        Predicate<Person> predicate = x -> {
+            boolean homeVisitMatch;
+            if (x.getCategory().toString().equals("P")) {
+                Patient p = ((Patient) x);
+                homeVisitMatch = p.hasBeenFullyVisited();
+            } else {
+                Nurse n = ((Nurse) x);
+                homeVisitMatch = n.hasCompletedAllVisits();
+            }
+            return !homeVisitMatch;
+        };
+        expectedModel.updateFilteredPersonList(predicate);
+
+        Command listCommand = new ListCommand(Optional.empty(), Optional.empty(),
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.of(Boolean.FALSE));
+        assertCommandSuccess(listCommand,
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "NIL", "NIL", "NIL", "false"),
+                expectedModel);
     }
 
     @Test
@@ -98,8 +152,11 @@ public class ListCommandTest {
         Command listCommand = new ListCommand(Optional.of(new Address("Jurong")),
                 Optional.of(new Category(Category.PATIENT_SYMBOL)),
                 Optional.of(new Gender(Gender.FEMALE_SYMBOL)),
-                Optional.of(new Tag("friends")));
+                Optional.of(new Tag("friends")),
+                Optional.empty(),
+                Optional.empty());
         assertCommandSuccess(listCommand,
-                model, String.format(ListCommand.MESSAGE_SUCCESS, "Jurong", "P", "F", "friends"), expectedModel);
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "Jurong", "P", "F", "friends", "NIL", "NIL"),
+                expectedModel);
     }
 }

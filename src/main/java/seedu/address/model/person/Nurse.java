@@ -73,6 +73,13 @@ public class Nurse extends Person {
         return this.fullyScheduledDateList;
     }
 
+    /**
+     * Returns true if this Nurse has completed all assigned home visits.
+     */
+    public boolean hasCompletedAllVisits() {
+        return homeVisitList.stream().allMatch(HomeVisit::isVisited);
+    }
+
     public String getHomesVisitsInString() {
         StringBuilder dateSlotListSB = new StringBuilder();
 

@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FULLY_ASSIGNED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FULLY_VISITED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -27,13 +29,16 @@ public class ListCommandParser implements Parser {
      */
     public ListCommand parse(String args) {
         if (args.length() == 0) {
-            return new ListCommand(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
+            return new ListCommand(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
+                    Optional.empty(), Optional.empty());
         }
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
                 PREFIX_ADDRESS,
                 PREFIX_CATEGORY,
                 PREFIX_GENDER,
-                PREFIX_TAG);
+                PREFIX_TAG,
+                PREFIX_FULLY_ASSIGNED,
+                PREFIX_FULLY_VISITED);
 
         Optional<Address> address = argMultimap.getValue(PREFIX_ADDRESS).map(Address::new);
         Optional<Tag> tag = argMultimap.getValue(PREFIX_TAG).map(Tag::new);
@@ -60,7 +65,19 @@ public class ListCommandParser implements Parser {
                 }, () -> gender.add(Optional.empty()));
         assert(gender.size() == 1);
 
-        return new ListCommand(address, category.get(0), gender.get(0), tag);
+        List<Optional<Boolean>> fullyAssigned = new ArrayList<>();
+        argMultimap.getValue(PREFIX_FULLY_ASSIGNED).ifPresentOrElse(
+                x -> fullyAssigned.add(Optional.of(Boolean.valueOf(x))),
+                () -> fullyAssigned.add(Optional.empty())
+        );
+
+        List <Optional<Boolean>> fullyVisited = new ArrayList<>();
+        argMultimap.getValue(PREFIX_FULLY_VISITED).ifPresentOrElse(
+                x -> fullyVisited.add(Optional.of(Boolean.valueOf(x))),
+                () -> fullyVisited.add(Optional.empty())
+        );
+        return new ListCommand(address, category.get(0), gender.get(0), tag,
+                fullyAssigned.get(0), fullyVisited.get(0));
     }
 
 }

@@ -69,6 +69,13 @@ public class HomeVisit {
         return this.homeVisitPatientUidNo;
     }
 
+    /**
+     * Returns true if the dateSlot has been marked as successfully visited.
+     */
+    public boolean isVisited() {
+        return this.homeVisitDateSlot.getHasVisited() && this.homeVisitDateSlot.getIsSuccessVisit();
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -119,6 +119,20 @@ public class Patient extends Person {
         return dateSlotListSB.toString();
     }
 
+    /**
+     * Return true if this Patient has been assigned a Nurse to all available date slots.
+     */
+    public boolean hasBeenFullyAssigned() {
+        return dateSlots.stream().allMatch(DateSlot::getHasAssigned);
+    }
+
+    /**
+     * Return true if this Patient has been marked as visited for all date slots.
+     */
+    public boolean hasBeenFullyVisited() {
+        return dateSlots.stream().allMatch(x -> x.getIsSuccessVisit() && x.getHasVisited());
+    }
+
     @Override
     public String toString() {
         String dateSlotList = getDatesSlotsInString();

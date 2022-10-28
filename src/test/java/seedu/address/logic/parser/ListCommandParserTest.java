@@ -16,7 +16,7 @@ public class ListCommandParserTest {
     @Test
     public void parse_noFiltersApplied_listAll() {
         Command expectedCommand = new ListCommand(Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         Command actualCommand = new ListCommandParser().parse("");
         assert(actualCommand.equals(expectedCommand));
     }
@@ -24,15 +24,16 @@ public class ListCommandParserTest {
     @Test
     public void parse_addressFilterApplied_listAddress() {
         Command expectedCommand = new ListCommand(Optional.of(new Address("Jurong")), Optional.empty(),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         Command actualCommand = new ListCommandParser().parse("list a/ Jurong");
         assert(actualCommand.equals(expectedCommand));
     }
 
     @Test
     public void parse_categoryFilterApplied_listCategory() {
-        Command expectedCommand = new ListCommand(Optional.empty(), Optional.of(new Category(Category.PATIENT_SYMBOL)),
-                Optional.empty(), Optional.empty());
+        Command expectedCommand = new ListCommand(Optional.empty(),
+                Optional.of(new Category(Category.PATIENT_SYMBOL)),
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         Command actualCommand = new ListCommandParser().parse("list c/ P");
         assert(actualCommand.equals(expectedCommand));
     }
@@ -40,7 +41,8 @@ public class ListCommandParserTest {
     @Test
     public void parse_genderFilterApplied_listGender() {
         Command expectedCommand = new ListCommand(Optional.empty(), Optional.empty(),
-                Optional.of(new Gender(Gender.FEMALE_SYMBOL)), Optional.empty());
+                Optional.of(new Gender(Gender.FEMALE_SYMBOL)), Optional.empty(),
+                Optional.empty(), Optional.empty());
         Command actualCommand = new ListCommandParser().parse("list g/ F");
         assert(actualCommand.equals(expectedCommand));
     }
@@ -48,8 +50,24 @@ public class ListCommandParserTest {
     @Test
     public void parse_tagFilterApplied_listTag() {
         Command expectedCommand = new ListCommand(Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.of(new Tag("friends")));
+                Optional.empty(), Optional.of(new Tag("friends")), Optional.empty(), Optional.empty());
         Command actualCommand = new ListCommandParser().parse("list t/ friends");
+        assert(actualCommand.equals(expectedCommand));
+    }
+
+    @Test
+    public void parse_tagFullyAssignedApplied_listFullyAssigned() {
+        Command expectedCommand = new ListCommand(Optional.empty(), Optional.empty(),
+                Optional.empty(), Optional.empty(), Optional.of(Boolean.TRUE), Optional.empty());
+        Command actualCommand = new ListCommandParser().parse("list as/ true");
+        assert(actualCommand.equals(expectedCommand));
+    }
+
+    @Test
+    public void parse_tagNotFullyVisitedApplied_listNotFullyVisited() {
+        Command expectedCommand = new ListCommand(Optional.empty(), Optional.empty(),
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.of(Boolean.FALSE));
+        Command actualCommand = new ListCommandParser().parse("list v/ false");
         assert(actualCommand.equals(expectedCommand));
     }
 
@@ -58,7 +76,9 @@ public class ListCommandParserTest {
         Command expectedCommand = new ListCommand(Optional.of(new Address("Jurong")),
                 Optional.of(new Category(Category.PATIENT_SYMBOL)),
                 Optional.of(new Gender(Gender.FEMALE_SYMBOL)),
-                Optional.of(new Tag("friends")));
+                Optional.of(new Tag("friends")),
+                Optional.empty(),
+                Optional.empty());
         Command actualCommand = new ListCommandParser().parse("list a/Jurong c/ P g/ F t/ friends");
 
         assert(actualCommand.equals(expectedCommand));

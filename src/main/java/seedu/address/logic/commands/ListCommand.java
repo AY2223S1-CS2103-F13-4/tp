@@ -17,8 +17,8 @@ import seedu.address.model.tag.Tag;
  */
 public class ListCommand extends Command {
 
-    public static final String MESSAGE_ARGUMENTS = "ADDRESS: %s, CATEGORY: %s, GENDER: %s, TAG: %s, " +
-            "FULLY ASSIGNED: %s, FULLY VISITED: %s";
+    public static final String MESSAGE_ARGUMENTS = "ADDRESS: %s, CATEGORY: %s, GENDER: %s, TAG: %s, "
+            + "FULLY ASSIGNED: %s, FULLY VISITED: %s";
 
     public static final String COMMAND_WORD = "list";
 
@@ -52,8 +52,8 @@ public class ListCommand extends Command {
      * @param d filter for presence or absence of assignment of dateSlots.
      * @param h filter for dateSlots that have been completed or have yet to be completed.
      */
-    public ListCommand(Optional<Address> a, Optional<Category> c, Optional<Gender> g, Optional<Tag> t
-            , Optional<Boolean> d, Optional<Boolean> h) {
+    public ListCommand(Optional<Address> a, Optional<Category> c, Optional<Gender> g, Optional<Tag> t,
+                       Optional<Boolean> d, Optional<Boolean> h) {
         address = a;
         category = c;
         gender = g;
@@ -91,10 +91,10 @@ public class ListCommand extends Command {
                         == homeVisit.orElse(p.hasBeenFullyVisited());
             } else {
                 Nurse n = ((Nurse) x);
-                boolean fully_scheduled = n.getUnavailableDates().size()
+                boolean fullyScheduled = n.getUnavailableDates().size()
                         + n.getFullyScheduledDates().size()
                         >= 7;
-                dateSlotMatch = fully_scheduled == dateSlot.orElse(fully_scheduled);
+                dateSlotMatch = fullyScheduled == dateSlot.orElse(fullyScheduled);
                 homeVisitMatch = n.hasCompletedAllVisits()
                         == homeVisit.orElse(n.hasCompletedAllVisits());
             }

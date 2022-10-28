@@ -130,8 +130,8 @@ public class HelpWindow extends UiPart<Stage> {
     private static final String LIST_FULLY_ASSIGNED_DEMO_INPUT = "list as/true";
     private static final String LIST_FULLY_ASSIGNED_DEMO_OUTPUT = "Listed all persons with specification: "
             + "ADDRESS: NIL, CATEGORY: NIL, GENDER: NIL, TAG: NIL, FULLY ASSIGNED: true, FULLY VISITED: NIL";
-    private static final String LIST_FULLY_VISITED_SEARCH_TEXT = "List all patients that have been fully visited or " +
-            "nurses that have completed all assigned visits";
+    private static final String LIST_FULLY_VISITED_SEARCH_TEXT = "List all patients that have been fully visited or "
+            + "nurses that have completed all assigned visits";
     private static final String LIST_FULLY_VISITED_DEMO_INPUT = "list v/true";
     private static final String LIST_FULLY_VISITED_DEMO_OUTPUT = "Listed all persons with specification: "
             + "ADDRESS: NIL, CATEGORY: NIL, GENDER: NIL, TAG: NIL, FULLY ASSIGNED: NIL, FULLY VISITED: true";
@@ -234,10 +234,10 @@ public class HelpWindow extends UiPart<Stage> {
         dictionary.put(LIST_CATEGORY_SEARCH_TEXT, new String[]{LIST_CATEGORY_DEMO_INPUT, LIST_CATEGORY_DEMO_OUTPUT});
         dictionary.put(LIST_GENDER_SEARCH_TEXT, new String[]{LIST_GENDER_DEMO_INPUT, LIST_GENDER_DEMO_OUTPUT});
         dictionary.put(LIST_TAG_SEARCH_TEXT, new String[]{LIST_TAG_DEMO_INPUT, LIST_TAG_DEMO_OUTPUT});
-        dictionary.put(LIST_FULLY_ASSIGNED_SEARCH_TEXT, new String[]{LIST_FULLY_ASSIGNED_DEMO_INPUT,
-                LIST_FULLY_ASSIGNED_DEMO_OUTPUT});
-        dictionary.put(LIST_FULLY_VISITED_SEARCH_TEXT, new String[]{LIST_FULLY_VISITED_DEMO_INPUT,
-                LIST_FULLY_VISITED_DEMO_OUTPUT});
+        dictionary.put(LIST_FULLY_ASSIGNED_SEARCH_TEXT,
+                new String[]{LIST_FULLY_ASSIGNED_DEMO_INPUT, LIST_FULLY_ASSIGNED_DEMO_OUTPUT});
+        dictionary.put(LIST_FULLY_VISITED_SEARCH_TEXT,
+                new String[]{LIST_FULLY_VISITED_DEMO_INPUT, LIST_FULLY_VISITED_DEMO_OUTPUT});
         dictionary.put(LIST_MIX_SEARCH_TEXT, new String[]{LIST_MIX_DEMO_INPUT, LIST_MIX_DEMO_OUTPUT});
     };
 

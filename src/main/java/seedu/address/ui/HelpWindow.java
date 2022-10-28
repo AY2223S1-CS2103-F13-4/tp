@@ -239,6 +239,7 @@ public class HelpWindow extends UiPart<Stage> {
         dictionary.put(LIST_FULLY_VISITED_SEARCH_TEXT, new String[]{LIST_FULLY_VISITED_DEMO_INPUT,
                 LIST_FULLY_VISITED_DEMO_OUTPUT});
         dictionary.put(LIST_MIX_SEARCH_TEXT, new String[]{LIST_MIX_DEMO_INPUT, LIST_MIX_DEMO_OUTPUT});
+    };
 
     /**
      * Initialize dictionary for usage help.
